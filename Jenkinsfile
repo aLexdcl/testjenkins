@@ -1,21 +1,18 @@
 pipeline {
+
     agent any
-    stage('Init'){
-        steps {
-            echo "Testing......."
+    tools{
+        maven 'local maven'
+    }
+    stages{
+        stage ('build'){
+            steps{
+                sh 'mvn clean package'
+                sh "/usr/local/bin/docker build . -t tomcatwebapp:${env.BUILD_ID}"
+        
+            }
         }
     }
 
-    stage ('Build'){
-        steps {
-            echo "Building"
-        }
-    }
-
-    stage('Deploy') {
-        steps {
-            echo "Code Deploye"
-        }
-    }
   
 }
